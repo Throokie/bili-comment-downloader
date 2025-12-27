@@ -1,9 +1,9 @@
 {
-  "name": "bilibil-comments-helper",
-  "displayName": "B站评论助手",
-  "version": "1.0.0",
-  "description": "Bilibili评论助手，帮你下载评论，分析提取评论关键字，分析热点趋势～",
-  "author": "joey",
+  "name": "bili-comment-downloader",
+  "displayName": "b站评论下载插件",
+  "version": "1.0.2",
+  "description": "b站评论下载插件稳定版，帮你下载评论，分析提取评论关键字，分析热点趋势～",
+  "author": "throokie",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",

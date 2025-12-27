@@ -1,6 +1,5 @@
 {
-  "strict": false,
-  "extends": "plasmo/templates/tsconfig.base",
+  "extends": "plasmo/templates/tsconfig.base.json",
   "exclude": [
     "node_modules"
   ],
@@ -10,9 +9,10 @@
     "./**/*.tsx"
   ],
   "compilerOptions": {
+    "strict": false,
     "paths": {
       "~*": [
-        "./*",
+        "./*"
       ]
     },
     "baseUrl": "."

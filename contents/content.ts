@@ -4,7 +4,7 @@
 
 import type { PlasmoCSConfig } from "plasmo"
 import { extractReply } from "~utils";
-import { commentInfoMap, commentsListMap, extarct_config, global_data } from "./content-ui";
+import { commentInfoMap, commentsListMap, extract_config, global_data } from "./content-ui";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://www.bilibili.com/video/*"],
@@ -54,13 +54,13 @@ function onMainComments(data, apiQuery) {
   }
 
   if (upper && upper.mid) {
-    extarct_config.upMid = upper.mid
+    extract_config.upMid = upper.mid
   }
 
   output()
 
-  if (extarct_config.onMainChange) {
-    extarct_config.onMainChange()
+  if (extract_config.onMainChange) {
+    extract_config.onMainChange()
   }
 }
 
@@ -76,8 +76,8 @@ export function onNestedReply(data, apiQuery) {
   }
   output()
 
-  if (extarct_config.onNestedChange) {
-    extarct_config.onNestedChange()
+  if (extract_config.onNestedChange) {
+    extract_config.onNestedChange()
   }
 }
 
