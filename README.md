@@ -1,25 +1,118 @@
-# 原作者
-本项目基于原作者开发的bilibili-comments-helper项目，感谢原作者的无私分享。
-https://github.com/rictt/bilibili-comments-helper
+# 📺 Bilibili Comment Downloader | B站评论采集助手 🚀
 
-# 我的修改
-改了一些按按钮没反应的bug
-将运行和保存分开成两个按钮
-添加显示日志，可以直观看到程序是否正常
+> 🌟 **一款基于浏览器插件的 Bilibili 视频评论采集、分析与导出工具**
+>
+> 💖 本项目基于 [rictt/bilibili-comments-helper](https://github.com/rictt/bilibili-comments-helper) 二次开发，修复了部分 BUG 并优化了交互体验。
 
-# 程序截图：
-![alt text](PixPin_2025-12-27_11-24-52.png)
+![License](https://img.shields.io/badge/License-MIT-green.svg) ![React](https://img.shields.io/badge/React-18.2.0-blue) ![Plasmo](https://img.shields.io/badge/Plasmo-0.84.0-purple) ![Python](https://img.shields.io/badge/Python-Flask-yellow)
 
+---
 
-建议使用excel保存模式
-![alt text](image.png)
+## ✨ 主要功能 (Key Features)
 
-# 自己编译教程
+*   **📥 评论采集**：支持采集视频的热门评论、最新评论以及**楼中楼（二级评论）**。
+*   **📊 数据可视化**：生成的 HTML 报告包含用户性别、等级、VIP状态、IP属地分布等图表分析。
+*   **💾 多种导出格式**：
+    *   **Excel (.xlsx)**：推荐使用，方便后续整理筛选 📗。
+    *   **HTML**：包含交互式图表和完整数据的离线网页 🌐。
+*   **🧠 情感与关键词分析**：配合 Python 后端，可进行评论情感分析（积极/消极）及关键词词云提取。
+*   **📝 实时日志**：插件界面内置日志窗口，实时查看爬取进度和状态，拒绝“假死” 🕵️‍♂️。
 
-npm install
-npm run build
+---
 
-# 使用教程
-下载release里的压缩包，解压后在浏览器的扩展页面选择导入已解压的压缩包
-记得提前开启开发者模式
-![alt text](image-1.png)
+## 🛠️ 本版改进 (Improvements)
+
+相较于原版，本项目主要做了以下优化：
+
+1.  🐛 **修复 BUG**：修复了部分情况下点击按钮无反应的问题。
+2.  🔘 **操作分离**：将“运行爬取”和“保存数据”拆分为两个独立步骤，避免误操作丢失数据。
+3.  📜 **可视化日志**：添加了日志显示区域，直观看到当前采集了多少条、是否遇到错误等。
+4.  📉 **Excel 优化**：优化了 Excel 导出模式的数据结构。
+
+---
+
+## 📸 程序截图 (Screenshots)
+
+### 🧩 插件界面与日志
+*(建议使用 Excel 保存模式)*
+![插件运行截图](image.png)
+
+### 🌐 导出结果预览
+*(HTML 报告页面，包含 ECharts 图表)*
+![导出结果](PixPin_2025-12-27_11-24-52.png)
+
+---
+
+## 🚀 安装与使用教程 (Installation & Usage)
+
+### 方式一：加载已构建包 (推荐小白)
+
+1.  📦 下载本项目 Release 中的压缩包并解压。
+2.  🌐 打开 Chrome/Edge 浏览器，进入 **扩展程序页面** (`chrome://extensions/`)。
+3.  UI **开启右上角的「开发者模式」**。
+4.  📂 点击左上角的 **「加载已解压的扩展程序」**，选择步骤 1 中解压的文件夹。
+5.  🎉 安装完成！打开任意 B 站视频页，右侧会出现插件按钮。
+
+![安装教程](image-1.png)
+
+### 方式二：自己编译 (Development)
+
+如果你是开发者，想自己修改代码：
+
+1.  **环境准备**：确保安装了 [Node.js](https://nodejs.org/) 和 [pnpm](https://pnpm.io/)。
+2.  **安装依赖**：
+    ```bash
+    npm install
+    # 或者
+    pnpm install
+    ```
+3.  **开发模式** (热更新)：
+    ```bash
+    npm run dev
+    # 或者
+    pnpm dev
+    ```
+4.  **构建生产包**：
+    ```bash
+    npm run build
+    # 或者
+    pnpm build
+    ```
+    构建完成后，`build/chrome-mv3-prod` 目录即为可安装的扩展程序包。
+
+---
+
+## 🐍 高级功能：情感与关键词分析 (Backend)
+
+如果你想在 HTML 报告中看到 **情感分析** 和 **关键词统计**，需要运行本地 Python 服务器：
+
+1.  进入 `server` 目录。
+2.  安装依赖库：
+    ```bash
+    pip install flask flask_cors jieba snownlp
+    ```
+3.  运行服务器：
+    ```bash
+    python analyse.py
+    ```
+4.  🏁 此时导出 HTML 并点击“获取完整分析”即可连接本地服务进行 NLP 处理。
+
+---
+
+## ⚠️ 注意事项 (Disclaimer)
+
+*   🔴 **账号安全**：B站查看评论需要登录。本插件仅对页面展示数据进行汇总，**建议适度使用**，大量高频请求接口可能会导致账号被风控或临时封禁。请自行承担风险！
+*   🐢 **性能提示**：使用「爬取含回复」功能时，如果评论数量巨大（如数万条），可能会导致浏览器短暂卡顿，请耐心等待日志滚动。
+*   ⚖️ **免责声明**：本项目仅用于学习交流，**请勿用于任何商业用途**。
+
+---
+
+## 🤝 致谢 (Credits)
+
+*   感谢原作者 [rictt](https://github.com/rictt) 的开源贡献。
+*   UI 组件库：Element UI, ECharts.
+*   构建工具：Plasmo Framework.
+
+---
+
+**如果觉得好用，请给一个 Star ⭐ 吧！**
