@@ -155,7 +155,6 @@ function noMoreCommentPromise() {
 function downloadTopComments(topNum = 100) {
   return new Promise((resolve) => {
     extract_config.addLog(`开始爬取主评论，目标: ${topNum}条...`)
-    console.log(1)
     const handler = () => {
       const size = commentInfoMap.size
       extract_config.updateCount()
@@ -429,6 +428,7 @@ export default function Content() {
   const [tip, setTip] = useState('');
   const [logs, setLogs] = useState<string[]>([]);
   const [dataCount, setDataCount] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   extract_config.setTip = setTip
   extract_config.setLoading = setLoading
@@ -452,33 +452,59 @@ export default function Content() {
     extract_config.addLog(`正在导出为 ${mode} 格式...`)
   }
 
-  return <div className={ `${style.wrapper} ${loading ? style.loading : ''}` }>
-    <div style={{ maxHeight: '150px', overflowY: 'auto', fontSize: '12px', marginBottom: '10px', border: '1px solid #eee', padding: '5px', background: '#f9f9f9' }}>
-      {logs.length === 0 ? <div style={{color: '#999'}}>调试日志...</div> : logs.map((log, i) => <div key={i}>{log}</div>)}
-    </div>
-    <div style={{ marginBottom: '10px', fontSize: '12px', fontWeight: 'bold' }}>
-      当前已缓存数据: {dataCount} 条
-    </div>
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded)
+  }
 
-    <DownloadTop />
-    <DownloadTopWithNested />
-    <div>
-      <input value={ count } onKeyDown={ (e) => e.stopPropagation() } onChange={ onInputChange } className={ style['input'] } placeholder="条数" />
-    </div>
-    <DownloadIndexCommentCustom count={ count } />
-    <DownloadIndexCommentNestedCustom count={ count } />
-    
-    <fieldset style={{ marginTop: '10px', border: '1px solid #eee', padding: '5px' }}>
-      <legend style={{ fontSize: '12px' }}>数据导出</legend>
-      <div style={{ display: 'flex', gap: '5px', flexDirection: 'column' }}>
-         <Button onClick={() => handleExport('excel')} disabled={dataCount === 0}>保存 Excel</Button>
-         <Button onClick={() => handleExport('html')} disabled={dataCount === 0}>保存 HTML</Button>
+  // 收起状态下只显示小按钮
+  if (!isExpanded) {
+    return (
+      <div
+        className={style.toggleButton}
+        onClick={toggleExpand}
+        title="点击展开评论助手"
+      >
+        评论助手
       </div>
-    </fieldset>
+    )
+  }
 
-    { loading ? <div className={ style.loadingText }>正在处理...请勿重复操作</div> : null }
-    { tip ? <div className={ style.loadingText }>{tip}</div> : null }
-  </div>
+  // 展开状态下显示完整面板
+  return (
+    <div className={ `${style.wrapper} ${loading ? style.loading : ''}` }>
+      <div className={style.header}>
+        <span className={style.title}>评论助手</span>
+        <span className={style.collapseBtn} onClick={toggleExpand} title="收起面板">
+          {'<<'}
+        </span>
+      </div>
+      <div style={{ maxHeight: '150px', overflowY: 'auto', fontSize: '12px', marginBottom: '10px', border: '1px solid #eee', padding: '5px', background: '#f9f9f9' }}>
+        {logs.length === 0 ? <div style={{color: '#999'}}>调试日志...</div> : logs.map((log, i) => <div key={i}>{log}</div>)}
+      </div>
+      <div style={{ marginBottom: '10px', fontSize: '12px', fontWeight: 'bold' }}>
+        当前已缓存数据: {dataCount} 条
+      </div>
+
+      <DownloadTop />
+      <DownloadTopWithNested />
+      <div>
+        <input value={ count } onKeyDown={ (e) => e.stopPropagation() } onChange={ onInputChange } className={ style['input'] } placeholder="条数" />
+      </div>
+      <DownloadIndexCommentCustom count={ count } />
+      <DownloadIndexCommentNestedCustom count={ count } />
+
+      <fieldset style={{ marginTop: '10px', border: '1px solid #eee', padding: '5px' }}>
+        <legend style={{ fontSize: '12px' }}>数据导出</legend>
+        <div style={{ display: 'flex', gap: '5px', flexDirection: 'column' }}>
+           <Button onClick={() => handleExport('excel')} disabled={dataCount === 0}>保存 Excel</Button>
+           <Button onClick={() => handleExport('html')} disabled={dataCount === 0}>保存 HTML</Button>
+        </div>
+      </fieldset>
+
+      { loading ? <div className={ style.loadingText }>正在处理...请勿重复操作</div> : null }
+      { tip ? <div className={ style.loadingText }>{tip}</div> : null }
+    </div>
+  )
 }
 
 

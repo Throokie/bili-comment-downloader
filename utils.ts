@@ -13,7 +13,6 @@ type excelParamsType = {
 
 export async function exportToExcel(options: excelParamsType) {
   const { sheetName, style, headerColumns, tableData } = options
-  console.log(2)
 
   // import('exceljs').then(async (module) => {
     // const ExcelJS = module
@@ -49,7 +48,6 @@ export async function exportToExcel(options: excelParamsType) {
         worksheet.addRow(row)
       })
     }
-    console.log(worksheet)
     const buffer = await workbook.xlsx.writeBuffer()
     writeFile(sheetName, buffer);
 }
@@ -618,7 +616,7 @@ export function getHTML(data, videoInfo = {}, getTime) {
           const positiveItems = emotions.filter(e => e.score >= 0.55)
           const negativeItems = emotions.filter(e => e.score <= 0.45)
           const neutralItems = emotions.filter(e => e.score > 0.45 && e.score < 0.55)
-          this.echartsShowList.push('emption')
+          this.echartsShowList.push('emotion')
           const emotionChart = echarts.init(document.querySelector('#emotion-stat'))
           const stat = {
             "积极倾向": positiveItems.length,

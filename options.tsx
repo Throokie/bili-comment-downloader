@@ -76,7 +76,7 @@ function About() {
   return <div>
     {/* <div></div> */}
     <blockquote>
-      <TipText>当前版本：V0.0.1</TipText>
+      <TipText>当前版本：V1.0.2</TipText>
       <p><strong>本软件均仅用于学习交流，请勿用于任何商业用途！感谢大家！</strong></p>
       <p>反馈/联系：<span>2390923149@qq.com</span></p>
     </blockquote>
@@ -95,7 +95,7 @@ function Left({ menu, setMenu }) {
   return <div className={style.left}>
     <div className={style.title}>
       <h4>B站评论助手</h4>
-      <span>v0.0.1</span>
+      <span>v1.0.2</span>
     </div>
     <div style={{ flex: 1 }}>
       {menus.map(e => <Menu onClick={() => onClickMenu(e.key)} currentMenu={menu} value={e.key} label={e.label} key={e.key}></Menu>)}
